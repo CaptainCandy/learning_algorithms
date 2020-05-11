@@ -1,8 +1,24 @@
 package StacksAndQueues;
 
-public class ArrayStack<ValueType> {
+import java.util.Iterator;
+
+public class ArrayStack<ValueType> implements Iterable<ValueType> {
     private ValueType[] s;
     private int index = 0;
+
+    private class ReverseArrayIterator implements Iterator<ValueType> {
+        private int i = index;
+
+        public boolean hasNext() {
+            return i > 0;
+        }
+
+        public ValueType next() {
+            return s[--i];
+        }
+
+        public void remove() {}
+    }
 
     public ArrayStack() {
         // use casting because Java doesn't allow generic array declaration
@@ -32,5 +48,10 @@ public class ArrayStack<ValueType> {
         // to avoid thrashing: pop-push-pop-push-...
         if (index == s.length / 4) resize(s.length / 2);
         return value;
+    }
+
+    @Override
+    public Iterator<ValueType> iterator() {
+        return new ReverseArrayIterator();
     }
 }
