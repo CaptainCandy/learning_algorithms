@@ -21,7 +21,7 @@ public class LinkedStack<ValueType> implements Iterable<ValueType> {
             return value;
         }
 
-        public void remove() {}
+        public void remove() { }
 
     }
 
