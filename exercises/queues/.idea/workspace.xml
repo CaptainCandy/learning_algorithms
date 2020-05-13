@@ -20,64 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1e4f978-b3bd-4ae1-84e9-9e1170bce808" name="Default" comment="finish second week homework with score 92/100. some operations are still not in constant time.">
-      <change afterPath="$PROJECT_DIR$/../../.idea/libraries/algs4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeInsightSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/externalDependencies.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/file.template.settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/fileTemplates/includes/File Header.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/fileTemplates/internal/AnnotationType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/fileTemplates/internal/Class.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/fileTemplates/internal/Enum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/fileTemplates/internal/Interface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/fileTemplates/internal/module-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/fileTemplates/internal/package-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/findbugs-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Algorithms__Part_I.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/algs4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/saveactions_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.lift/algs4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.lift/checkstyle-coursera.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.lift/checkstyle-lift.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.lift/checkstyle-suppressions.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.lift/spotbugs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Algorithms, Part I.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Deque$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Deque$ListIterator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Deque$Node.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Deque.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Deque.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Permutation.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Permutation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RandomizedQueue$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RandomizedQueue$ListIterator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RandomizedQueue$Node.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RandomizedQueue.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RandomizedQueue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/distinct.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/duplicates.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mediumTale.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/permutation10.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/permutation4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/permutation5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/permutation6.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/permutation8.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/queues.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tale.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tinyTale.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/StacksAndQueues/Evaluate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/algs4.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../learning_algorithms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../learning_algorithms.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/StacksAndQueues/LinkedStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/StacksAndQueues/LinkedStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../learning_notes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../learning_notes.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,6 +117,14 @@
       <option name="presentableId" value="Default" />
       <updated>1589286256303</updated>
     </task>
+    <task id="LOCAL-00001" summary="finish second week homework with score 92/100. some operations are still not in constant time.">
+      <created>1589361244868</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1589361244868</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">

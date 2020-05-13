@@ -1,6 +1,6 @@
 # 第一周作业
 
-## 问题描述
+### 问题描述
 
 详细描述请参见：[Percolation](https://coursera.cs.princeton.edu/algs4/assignments/percolation/specification.php)
 
@@ -237,3 +237,393 @@ public class PercolationStats {
 
 # 第二周作业
 
+### 问题描述
+
+详细描述请参见[Queues](https://coursera.cs.princeton.edu/algs4/assignments/queues/specification.php)
+
+简单来讲，就是实现一个双头队列（`Deque`. A double-ended queue or deque, pronounced “deck”），和一个随机队列`RandomizedQueue`。双头队列要求实现可以任意选择在队列的头部或尾部添加元素，或者从头部或尾部删除元素。随机队列的入列和普通队列相同，出列要求是从队列中随机选取一个元素出列，同时提供一个`sample()`方法，随机返回队列中的一个元素。
+
+下面是教授要求的API：
+```java
+public class Deque<Item> implements Iterable<Item> {
+
+    // construct an empty deque
+    public Deque()
+
+    // is the deque empty?
+    public boolean isEmpty()
+
+    // return the number of items on the deque
+    public int size()
+
+    // add the item to the front
+    public void addFirst(Item item)
+
+    // add the item to the back
+    public void addLast(Item item)
+
+    // remove and return the item from the front
+    public Item removeFirst()
+
+    // remove and return the item from the back
+    public Item removeLast()
+
+    // return an iterator over items in order from front to back
+    public Iterator<Item> iterator()
+
+    // unit testing (required)
+    public static void main(String[] args)
+
+}
+```
+```java
+public class RandomizedQueue<Item> implements Iterable<Item> {
+
+    // construct an empty randomized queue
+    public RandomizedQueue()
+
+    // is the randomized queue empty?
+    public boolean isEmpty()
+
+    // return the number of items on the randomized queue
+    public int size()
+
+    // add the item
+    public void enqueue(Item item)
+
+    // remove and return a random item
+    public Item dequeue()
+
+    // return a random item (but do not remove it)
+    public Item sample()
+
+    // return an independent iterator over items in random order
+    public Iterator<Item> iterator()
+
+    // unit testing (required)
+    public static void main(String[] args)
+
+}
+```
+
+先说第一个类，因为要同时满足双向操作，所以很容易想到使用双向链表作为基础的数据结构，在每个`Node`私有类中添加一个`prior`指针指向节点的前驱。双向链表的节点每个占用内存48byte，正好满足题目对内存占用的要求。对于`size()`方法需要返回队列中的元素数量，只要维护一个`size`属性即可，每次入列出列对其进行`++`和`--`的操作，同时这个`size`属性可以用来判断队列是否为空。
+
+```java
+public class Deque<Item> implements Iterable<Item> {
+    // inner class node 16+8*2+8+8=48 bytes memory
+    private class Node {
+        Item item;
+        Node next;
+        Node prior;
+    }
+
+    private class ListIterator implements Iterator<Item> {
+        private Node current = first;
+
+        public boolean hasNext() { return current != null; }
+
+        public Item next() {
+            if (hasNext()) {
+                Item item = current.item;
+                current = current.next;
+                return item;
+            }
+            else throw new NoSuchElementException("There is no next item. ");
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("This method is not supported. ");
+        }
+    }
+
+    private Node first;
+    private Node last;
+    private int size;
+
+    // construct an empty deque
+    public Deque() { }
+
+    // is the deque empty?
+    public boolean isEmpty() { return size == 0; }
+
+    // return the number of items on the deque
+    public int size() { return size; }
+
+    // add the item to the front
+    public void addFirst(Item item) {
+        if (item == null) { throw new IllegalArgumentException("A null item detected."); }
+        else if (isEmpty()) {
+            first = new Node();
+            first.item = item;
+            last = first;
+            size++;
+        }
+        else {
+            Node oldFirst = first;
+            first = new Node();
+            first.item = item;
+            first.next = oldFirst;
+            oldFirst.prior = first;
+            size++;
+        }
+    }
+
+    // add the item to the back
+    public void addLast(Item item) {
+        if (item == null) { throw new IllegalArgumentException("A null item detected."); }
+        else if (isEmpty()) {
+            last = new Node();
+            last.item = item;
+            first = last;
+            size++;
+        }
+        else {
+            Node oldLast = last;
+            last = new Node();
+            last.item = item;
+            last.prior = oldLast;
+            oldLast.next = last;
+            size++;
+        }
+    }
+
+    // remove and return the item from the front
+    public Item removeFirst() {
+        if (!isEmpty()) {
+            Item item = first.item;
+            first = first.next;
+            size--;
+            return item;
+        }
+        else {
+            throw new NoSuchElementException("The deque is empty.");
+        }
+    }
+
+    // remove and return the item from the back
+    public Item removeLast() {
+        if (!isEmpty()) {
+            Item item = last.item;
+            last = last.prior;
+            size--;
+            return item;
+        }
+        else {
+            throw new NoSuchElementException("The deque is empty.");
+        }
+    }
+
+    // return an iterator over items in order from front to back
+    public Iterator<Item> iterator() { return new ListIterator(); }
+
+    // unit testing (required)
+    public static void main(String[] args) {
+        // unit testing大家自己写吧
+    }
+}
+```
+
+再说第二个类。随机队列的入列不需要再考虑，主要考虑当随机选取了一个节点之后，如何找到这个节点并remove掉。看了网上的一些解答，意识到这里可能确实是选择用数组作为底层的数据结构更好一些，因为数组可以在$O(1)$的操作时间中找到需要出列的节点。但是我既然已经用了链表那就还是用链表实现一下吧。
+
+正常的想法是，随机生成一个索引`i`，从`1`开始经过`i-1`次操作找到出列元素，然后对出列元素 前驱的后继、后继的前驱 进行修改（当然边界情况要考虑，只有1个元素，只有2个元素以及随机索引在头尾的情况）。这边我考虑到我们的链表已经是双向链表了，如果根据索引`i`在上半部分还是下半部分（和`size/2`作比较），可以选择从头部或者尾部开始向后或向前寻找，这样把最坏情况$O(size)$降低到$O(size/2)$，在现实中应该是会有些速度提升的吧，然而我最后的timing打分还是没全过，169/193，应该是链表的原因了，看到网上有前辈用数组可以满分，见[EnPFighter](https://www.cnblogs.com/enigmaxp/p/5905598.html). `sample()`方法的实现原理和上面描述的差不多，只需要找到并返回`item`就行了，更简单一些。
+
+关于随机遍历器，我想了想只用链表解决的话，还是跟上面这段一样，要写比较多的代码并且套循环，代码不整洁，速度也不够快，所以这里还是借用了临时数组的思想。记录一个随机生成的索引`target`和临时数组中未被抽到过的元素的最大所以`lastIndex`，每次生成在`[1, lastIndex]`之间生成随机`target`，并将`target`的元素和`lastIndex`的元素进行调换，然后执行`lastIndex--`以保证已经抽到过的不会再被抽到。
+
+```java
+public class RandomizedQueue<Item> implements Iterable<Item> {
+    // inner class node 16+8*2+8+8=48 bytes memory
+    private class Node {
+        Item item;
+        Node next;
+        Node prior;
+    }
+
+    private class ListIterator implements Iterator<Item> {
+        private int lastIndex;
+        private Item[] temp;
+
+        public ListIterator() {
+            lastIndex = size - 1;
+            temp = (Item[]) new Object[size];
+            Node current = first;
+            for (int i = 0; i < size; i++) {
+                temp[i] = current.item;
+                current = current.next;
+            }
+        }
+
+        public boolean hasNext() { return lastIndex >= 0; }
+
+        public Item next() {
+            if (hasNext()) {
+                int target = StdRandom.uniform(lastIndex + 1);
+                Item item = temp[target];
+                temp[target] = temp[lastIndex];
+                temp[lastIndex] = item;
+                lastIndex--;
+                return item;
+            }
+            else throw new NoSuchElementException("There is no next item. ");
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("This method is not supported. ");
+        }
+    }
+
+    private Node first;
+    private Node last;
+    private int size;
+
+    // construct an empty randomized queue
+    public RandomizedQueue() { }
+
+    // is the randomized queue empty?
+    public boolean isEmpty() { return size == 0; }
+
+    // return the number of items on the randomized queue
+    public int size() { return size; }
+
+    // add the item
+    public void enqueue(Item item) {
+        if (item == null) throw new IllegalArgumentException("The item is null.");
+        else {
+            Node oldLast = last;
+            last = new Node();
+            last.item = item;
+            last.next = null;
+            if (isEmpty()) first = last;
+            else {
+                last.prior = oldLast;
+                oldLast.next = last;
+            }
+            size++;
+        }
+    }
+
+    // remove and return a random item
+    public Item dequeue() {
+        if (isEmpty()) throw new NoSuchElementException("The RandomQueue is empty.");
+        else {
+            if (size == 1) {
+                Item item = first.item;
+                first = null;
+                last = null;
+                size--;
+                return item;
+            }
+            else {
+                int i = StdRandom.uniform(size) + 1;
+                if (i > size / 2) {
+                    if (size == 2) {
+                        Item item = last.item;
+                        last = first;
+                        last.prior = null;
+                        first.next = null;
+                        size--;
+                        return item;
+                    }
+                    else {
+                        if (i == size) {
+                            Item item = last.item;
+                            last = last.prior;
+                            last.next = null;
+                            size--;
+                            return item;
+                        }
+                        else {
+                            Node current = last;
+                            for (int j = 0; j < size - i; j++) {
+                                current = current.prior;
+                            }
+                            current.prior.next = current.next;
+                            current.next.prior = current.prior;
+                            size--;
+                            return current.item;
+                        }
+                    }
+                }
+                else {
+                    if (size == 2) {
+                        Item item = first.item;
+                        first = last;
+                        last.prior = null;
+                        first.next = null;
+                        size--;
+                        return item;
+                    }
+                    else {
+                        if (i == 1) {
+                            Item item = first.item;
+                            first = first.next;
+                            first.prior = null;
+                            size--;
+                            return item;
+                        }
+                        else {
+                            Node current = first;
+                            for (int j = 0; j < i - 1; j++) {
+                                current = current.next;
+                            }
+                            current.prior.next = current.next;
+                            current.next.prior = current.prior;
+                            size--;
+                            return current.item;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // return a random item (but do not remove it)
+    public Item sample() {
+        if (isEmpty()) throw new NoSuchElementException("The RandomQueue is empty.");
+        else {
+            int i = StdRandom.uniform(size) + 1;
+            if (i > size / 2) {
+                Node current = last;
+                for (int j = 0; j < size - i; j++) {
+                    current = current.prior;
+                }
+                return current.item;
+            }
+            else {
+                Node current = first;
+                for (int j = 0; j < i - 1; j++) {
+                    current = current.next;
+                }
+                return current.item;
+            }
+        }
+    }
+
+    // return an iterator over items in order from front to back
+    public Iterator<Item> iterator() { return new ListIterator(); }
+}
+```
+
+最后要实现一个`Permutation`类用来产生队列中随机的`k`个不重复的元素。因为不重复这个条件在`Iterator`的`next()`方法已经实现了，所以直接调用`foreach`语句就行。
+
+```java
+public class Permutation {
+    public static void main(String[] args) {
+        RandomizedQueue<String> rq = new RandomizedQueue<String>();
+        int k = Integer.parseInt(args[0]);
+
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            rq.enqueue(item);
+        }
+
+        for (String s: rq
+             ) {
+            if (k == 0) break;
+            StdOut.println(s);
+            k--;
+        }
+
+    }
+}
+```
+最终成绩是92分，不够满分，有部分时间和空间爆了。
