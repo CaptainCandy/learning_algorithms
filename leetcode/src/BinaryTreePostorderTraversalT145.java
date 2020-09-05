@@ -4,7 +4,13 @@ import java.util.List;
 import java.util.Stack;
 
 public class BinaryTreePostorderTraversalT145 {
+//	LinkedList<Integer> path = new LinkedList<Integer>();
 	public List<Integer> postorderTraversal(TreeNode root) {
+//		if (root != null) {
+//			postorderTraversal(root.left);
+//			postorderTraversal(root.right);
+//			path.add(root.val);
+//		}
 		LinkedList<Integer> path = new LinkedList<Integer>();
 		if (root == null) return path;
 		Stack<TreeNode> stack = new Stack<TreeNode>();
