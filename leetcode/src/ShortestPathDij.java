@@ -181,7 +181,7 @@ public class ShortestPathDij<T> {
      *
      * @return int
      */
-    private int indexOfMin(int[] nums) {
+    private int indexOfMin(int[] weights) {
         List<Integer> remain = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             if (statuses[i] == Status.UNDISCOVERD) {
@@ -193,7 +193,7 @@ public class ShortestPathDij<T> {
         }
         int minIndex = remain.get(0);
         for (int j : remain) {
-            if (nums[j] < nums[minIndex]) {
+            if (weights[j] < weights[minIndex]) {
                 minIndex = j;
             }
         }

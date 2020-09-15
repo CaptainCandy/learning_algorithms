@@ -19,13 +19,7 @@ public class RemoveNthNodeFromEndofListT19 {
 			p = p.next;
 			q = q.next;
 		}
-		if (p.next == head){
-			p.next = p.next.next;
-			return p.next;
-		}
-		else {
-			p.next = p.next.next;
-			return dummy.next;
-		}
+		p.next = p.next.next;
+		return dummy.next;
 	}
 }
