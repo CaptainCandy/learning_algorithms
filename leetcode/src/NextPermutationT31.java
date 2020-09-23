@@ -30,13 +30,4 @@ public class NextPermutationT31 {
 		nums[i] = nums[j];
 		nums[j] = tmp;
 	}
-
-	public static void main(String[] args) {
-		int[] nums = new int[]{1, 2, 3};
-		NextPermutationT31 next = new NextPermutationT31();
-		next.nextPermutation(nums);
-		for (int i = 0; i < nums.length; i++) {
-			System.out.print(nums[i]);
-		}
-	}
 }
