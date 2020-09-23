@@ -10,6 +10,15 @@ public class LowestCommonAncestorT236 {
     TreeNode res = null;
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if(left == null) return right;
+        if(right == null) return left;
+        return root;
+    }
+
+//    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 //        dfs(root);
 //        while (p != null) {
 //            visited.add(p.val);
@@ -20,10 +29,10 @@ public class LowestCommonAncestorT236 {
 //            q = parent.get(q.val);
 //        }
 //        return root;
-
-        dfs(root, p, q);
-        return res;
-    }
+//
+//        dfs(root, p, q);
+//        return res;
+//    }
 
     private void dfs(TreeNode root) {
         if (root.left != null) {
