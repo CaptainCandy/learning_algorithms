@@ -1,3 +1,31 @@
+//Given a text, return the Huffman coding table of all the characters (including space if it has).
+//        For example, given "this is an example of a huffman tree", return the table:
+//        111
+//        a 101
+//        e 011
+//        f 1101
+//        h 1000
+//        i 0000
+//        l 00100
+//        m 0101
+//        n 0011
+//        o 00011
+//        p 00101
+//        r 10011
+//        s 1100
+//        t 0100
+//        u 00010
+//        x 10010
+//        Huffman Tree:
+//        * Create a leaf node for each symbol and add it to the priority queue.
+//        * While there is more than one node in the queue:
+//
+//        * Remove the two nodes of highest priority (lowest probability) from the queue
+//        * Create a new internal node with these two nodes as children and with probability equal to the sum of the two nodes' probabilities.
+//        * Add the new node to the queue.
+//
+//        * The remaining node is the root node and the tree is complete
+
 import java.util.*;
 
 class HuffmanNode implements Comparable<HuffmanNode> {
